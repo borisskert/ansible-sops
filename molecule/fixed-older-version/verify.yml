@@ -1,0 +1,17 @@
+---
+- name: Verify
+  hosts: all
+
+  tasks:
+    - name: Should download sops executible
+      stat:
+        path: /usr/local/bin/sops
+      register: sops_executible_file
+      failed_when: not sops_executible_file.stat.exists
+
+    - name: Should have old sops installed
+      command: sops --version
+      register: sops
+      changed_when: false
+      failed_when:
+        sops.stdout_lines[0] != "sops 3.4.0"
