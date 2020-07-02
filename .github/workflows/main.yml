@@ -1,0 +1,34 @@
+---
+name: Run tests
+
+'on':
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  molecule_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+          path: "${{ github.repository }}"
+
+      - name: run default scenario
+        uses: borisskert/molecule-action@v0.1
+        with:
+          arguments: test
+
+      - name: run fixed-latest-version scenario
+        uses: borisskert/molecule-action@v0.1
+        with:
+          arguments: test -s fixed-latest-version
+
+      - name: run fixed-older-version scenario
+        uses: borisskert/molecule-action@v0.1
+        with:
+          arguments: test -s fixed-older-version
