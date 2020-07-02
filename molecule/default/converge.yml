@@ -1,7 +1,7 @@
 ---
 - name: Converge
   hosts: all
-  tasks:
-    - name: "Include ansible-sops"
-      include_role:
-        name: "ansible-sops"
+  become: true
+
+  roles:
+    - role: ansible-sops

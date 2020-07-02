@@ -1,9 +1,16 @@
 ---
-# This is an example playbook to execute Ansible tests.
-
 - name: Verify
   hosts: all
+
   tasks:
-  - name: Example assertion
-    assert:
-      that: true
+    - name: Should download sops executible
+      stat:
+        path: /usr/local/bin/sops
+      register: sops_executible_file
+      failed_when: not sops_executible_file.stat.exists
+
+    - name: Should have latest sops installed
+      command: sops --version
+      register: sops
+      changed_when: false
+      failed_when: sops.stdout != 'sops 3.5.0 (latest)'
