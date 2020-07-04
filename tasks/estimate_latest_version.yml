@@ -1,5 +1,5 @@
 ---
-# Need to estimate latest docker-compose version from github
+# Need to estimate latest version from github
 - name: Install git
   package:
     name: git

@@ -1,3 +1,4 @@
 ---
-sops_bin_path: /usr/local/bin/sops
 sops_version: ''
+sops_bin_path: /usr/local/bin/sops
+sops_install_from_sources: false

@@ -7,6 +7,16 @@
 
 - include: estimate_version_to_be_installed.yml
 
+- name: Determine if need to install from sources
+  set_fact:
+    need_to_install:
+      "{{ installed_version is not defined
+      or version_to_be_installed != installed_version }}"
+    install_from_sources:
+      "{{ sops_install_from_sources | bool
+      or ansible_architecture == 'aarch64'
+      or ansible_architecture == 'armv7l' }}"
+
 - name: Download bin file
   get_url:
     url:
@@ -16,5 +26,10 @@
     dest: "{{ sops_bin_path }}"
     mode: 0755
     force: true
-  when: installed_version is not defined
-    or version_to_be_installed != installed_version
+  when: need_to_install | bool
+    and not install_from_sources | bool
+
+- name: Install from sources
+  include: install-from-sources.yml
+  when: need_to_install | bool
+    and install_from_sources | bool

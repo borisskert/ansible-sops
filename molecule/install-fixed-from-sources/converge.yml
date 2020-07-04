@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  roles:
+    - role: ansible-sops
+      sops_version: v3.5.0
+      sops_install_from_sources: true

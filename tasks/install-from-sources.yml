@@ -1,0 +1,37 @@
+---
+- name: Install build tools needed to compile
+  package:
+    name:
+      - git
+
+- name: Checkout from github
+  git:
+    repo: https://github.com/mozilla/sops.git
+    dest: /usr/local/src/sops
+    version: "{{ version_to_be_installed }}"
+    depth: 1
+
+- name: Check compiled out
+  stat:
+    path: /usr/local/src/sops/out/sops
+  register: compiled_out
+
+- name: Compile sources
+  command: 'go build -o out/sops go.mozilla.org/sops/v3/cmd/sops'
+  args:
+    chdir: /usr/local/src/sops
+  when: not compiled_out.stat.exists
+  register: sops_compiled
+
+- name: Check target executible
+  stat:
+    path: /usr/local/bin/sops
+  register: target_exec
+
+- name: Install compiled executible
+  copy:
+    src: /usr/local/src/sops/out/sops
+    dest: /usr/local/bin/sops
+    remote_src: true
+    mode: 0755
+  when: not target_exec.stat.exists
