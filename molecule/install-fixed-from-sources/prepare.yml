@@ -4,5 +4,5 @@
   become: true
 
   roles:
-    - role: ansible-golang
+    - role: install-golang
       golang_version: 1.14.4
