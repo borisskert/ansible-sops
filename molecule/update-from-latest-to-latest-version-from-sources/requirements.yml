@@ -1,0 +1,4 @@
+---
+- name: install-golang
+  src: https://github.com/borisskert/ansible-golang.git
+  scm: git

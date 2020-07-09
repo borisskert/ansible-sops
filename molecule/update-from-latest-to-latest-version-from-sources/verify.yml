@@ -3,16 +3,7 @@
   hosts: all
 
   tasks:
-    - name: Should clone from github
-      stat:
-        path: /usr/local/src/sops
-      register: github_repo
-      failed_when: not (
-        github_repo.stat.exists
-        and github_repo.stat.isdir
-        )
-
-    - name: Should install sops executible
+    - name: Should download sops executible
       stat:
         path: /usr/local/bin/sops
       register: sops_executible_file

@@ -1,0 +1,12 @@
+---
+- name: Prepare
+  hosts: all
+  become: true
+
+  roles:
+    - role: install-golang
+      golang_version: 1.14.4
+
+    - role: ansible-sops
+      sops_version: 3.4.0
+      sops_install_from_sources: true

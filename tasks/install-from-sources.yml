@@ -9,6 +9,7 @@
     repo: https://github.com/mozilla/sops.git
     dest: /usr/local/src/sops
     version: "{{ version_to_be_installed }}"
+    force: true
     depth: 1
 
 - name: Check compiled out
